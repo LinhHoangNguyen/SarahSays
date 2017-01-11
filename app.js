@@ -1,3 +1,4 @@
+
 // Add your requirements
 var restify = require('restify'); 
 var builder = require('botbuilder'); 
@@ -11,12 +12,15 @@ server.listen(process.env.PORT || 3000, function()
 
 // Create chat bot
 var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID = '45b599be-3105-4b1f-9051-6b6f63cae663',
-    appPassword: process.env.MICROSOFT_APP_PASSWORD = 'hBEkL4HpcMxG4PpXdAgxpKq'
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
-
+server.get('/', restify.serveStatic({
+ directory: __dirname,
+ default: '/index.html'
+}));
 // Create bot dialogs
 bot.dialog('/', function (session) {
     session.send("Hello World");
